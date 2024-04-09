@@ -47,23 +47,24 @@ case class PostgresRecipeRepo(quill: Quill.Postgres[SnakeCase])
       .filter(_.id == lift(id))
   ).map(_.headOption)
 
-  def update(recipe: Recipe): Task[Option[Recipe]] = {
-    val update_query = queryRecipe.dynamic
-      .filter(_.id == lift(recipe.id))
-      .update(
-        _.name -> lift(recipe.name),
-        _.ingredients -> lift(recipe.ingredients)
-      )
+  def update(recipe: Recipe): Task[Option[Recipe]] = ???
+//      {
+//     val update_query = queryRecipe.dynamic
+//       .filter(_.id == lift(recipe.id))
+//       .update(
+//         _.name -> lift(recipe.name),
+//         _.ingredients -> lift(recipe.ingredients)
+//       )
 
-    val read = quote(
-      queryRecipe.filter(_.id == lift(recipe.id)).value
-    )
+//     val read = quote(
+//       queryRecipe.filter(_.id == lift(recipe.id)).value
+//     )
 
-    transaction {
-      val r = run(update_query)
-      r.flatMap(_ => run(read))
-    }
-  }
+//     transaction {
+//       val r = run(update_query)
+//       r.flatMap(_ => run(read))
+//     }
+//   }
 
 //     run(
 //     queryRecipe
