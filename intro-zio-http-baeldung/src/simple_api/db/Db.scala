@@ -6,22 +6,27 @@ import io.getquill.jdbczio.*
 import zio.{ZIO, ZLayer}
 
 import javax.sql.DataSource
+import simple_api.config.AppConfig
 
 object Db:
-  private def create(dbConfig: DbConfig): HikariDataSource = {
+  private def create(config: AppConfig): HikariDataSource = {
     val poolConfig = new HikariConfig()
-    poolConfig.setJdbcUrl(dbConfig.jdbcUrl)
+    poolConfig.setJdbcUrl(config.db.databaseUrl)
+    poolConfig.setUsername(config.db.databaseUser)
+    poolConfig.setPassword(config.db.databasePassword)
+    poolConfig.addDataSourceProperty("databaseName", config.db.databaseName)
+    poolConfig.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource")
     // poolConfig.setConnectionInitSql(dbConfig.connectionInitSql)
     new HikariDataSource(poolConfig)
   }
 
   // Used for migration and executing queries.
-  val dataSourceLive: ZLayer[DbConfig, Nothing, DataSource] =
+  val dataSourceLive: ZLayer[AppConfig, Nothing, DataSource] =
     ZLayer.scoped {
       ZIO.fromAutoCloseable {
         for {
-          dbConfig <- ZIO.service[DbConfig]
-          dataSource <- ZIO.succeed(create(dbConfig))
+          config <- ZIO.service[AppConfig]
+          dataSource <- ZIO.succeed(create(config))
         } yield dataSource
       }
     }

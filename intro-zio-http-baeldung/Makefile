@@ -7,6 +7,24 @@ build-native:
 		-o app \
 		-- \
 		--no-fallback \
+		--trace-class-initialization=org.slf4j.LoggerFactory \
+		--trace-class-initialization=io.netty.util.internal.logging.Slf4JLoggerFactory$NopInstanceHolder \
+		--trace-class-initialization=io.netty.util.internal.SystemPropertyUtil \
+		--trace-object-instantiation=io.netty.util.AsciiString \
+		--initialize-at-run-time=io.netty.util.AsciiString \
+		--initialize-at-run-time=io.netty.handler.codec.http.HttpObjectAggregator \
+		--initialize-at-run-time=io.netty.handler.codec.http.HttpHeaderNames \
+		--initialize-at-run-time=io.netty.handler.codec.http.HttpContentDecoder \
+		--initialize-at-run-time=io.netty.handler.codec.http.HttpHeaderValues \
+		--initialize-at-run-time=io.netty.handler.codec.http.HttpMethod \
+		--initialize-at-run-time=io.netty.handler.codec.http.websocketx.WebSocketVersion \
+		--initialize-at-run-time=io.netty.handler.codec.http.HttpRequestDecoder \
+		--initialize-at-run-time=io.netty.util.internal.PlatformDependent \
+		--initialize-at-run-time=org.slf4j.LoggerFactory \
+		--initialize-at-run-time=io.netty.util.internal.StringUtil \
+		--initialize-at-run-time=io.netty.util.internal.logging.Slf4JLoggerFactory$NopInstanceHolder \
+		--initialize-at-run-time=io.netty.util.internal.SystemPropertyUtil \
+		--initialize-at-run-time=io.netty.channel.ChannelInitializer \
 		--initialize-at-run-time=io.netty.handler.codec.compression.ZstdOptions \
 		--initialize-at-run-time=io.netty.handler.ssl.BouncyCastleAlpnSslUtils \
 		--initialize-at-run-time=io.netty.channel.DefaultFileRegion \

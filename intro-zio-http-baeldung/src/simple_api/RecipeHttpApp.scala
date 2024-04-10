@@ -64,7 +64,7 @@ object RecipeHttpApp:
 
   val putHandler: Http[RecipeService, Throwable, Request, Response] =
     Http.collectZIO[Request] {
-      case req @ Method.PUT -> Root / RecipeHttpApp.appContext =>
+      case req @ Method.PUT -> Root / RecipeHttpApp.appContext / id =>
         (for {
           u <- req.body.asString.map(_.fromJson[Recipe])
           response <- u match {

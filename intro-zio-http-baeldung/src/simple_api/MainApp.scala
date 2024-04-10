@@ -8,7 +8,7 @@ import simple_api.services.RecipeService
 import simple_api.repositories.RecipeRepo
 import simple_api.repositories.PostgresRecipeRepo
 import simple_api.models.Recipe
-import simple_api.db.{Db, DbConfig}
+import simple_api.db.*
 import simple_api.config.Configuration
 
 object MainApp extends ZIOAppDefault:
@@ -31,7 +31,6 @@ object MainApp extends ZIOAppDefault:
         )
         .provide(
           Configuration.live,
-          DbConfig.live,
           Db.dataSourceLive,
           Db.quillLive,
           PostgresRecipeRepo.live,

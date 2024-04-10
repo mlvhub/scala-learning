@@ -2,6 +2,7 @@
 //> using dep "dev.zio::zio::2.0.21"
 //> using dep "dev.zio::zio-http::3.0.0-RC2"
 //> using dep "dev.zio::zio-json::0.6.2"
+//> using dep "io.getquill::quill-jdbc::4.8.3"
 //> using dep "io.getquill::quill-jdbc-zio::4.8.3"
 //> using dep "org.postgresql:postgresql:42.7.3"
 //> using dep "com.zaxxer:HikariCP:5.1.0"

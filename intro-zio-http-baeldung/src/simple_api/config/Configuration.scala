@@ -16,7 +16,10 @@ final case class SystemConfig(
 )
 
 final case class DbConfig(
-    databaseUrl: String
+    databaseUrl: String,
+    databaseUser: String,
+    databasePassword: String,
+    databaseName: String
 )
 
 object Configuration:
@@ -26,8 +29,16 @@ object Configuration:
       for {
         jwtSecret <- ZIO.config(Config.string("JWT_SECRET"))
         databaseUrl <- ZIO.config(Config.string("DATABASE_URL"))
+        databaseUser <- ZIO.config(Config.string("DATABASE_USER"))
+        databasePassword <- ZIO.config(Config.string("DATABASE_PASSWORD"))
+        databaseName <- ZIO.config(Config.string("DATABASE_NAME"))
       } yield AppConfig(
         system = SystemConfig(jwtSecret = jwtSecret),
-        db = DbConfig(databaseUrl = databaseUrl)
+        db = DbConfig(
+          databaseUrl = databaseUrl,
+          databaseUser = databaseUser,
+          databasePassword = databasePassword,
+          databaseName = databaseName
+        )
       )
     )
