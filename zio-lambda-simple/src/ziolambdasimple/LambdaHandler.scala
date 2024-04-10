@@ -8,13 +8,12 @@ import java.io.IOException
 
 object LambdaHandler extends ZIOAppDefault {
 
-  def app(
-      event: String,
-      context: Context
-  ): ZIO[Any, IOException, String] = for {
-    _ <- printLine("Hello, world!")
-  } yield "Handler ran successfully"
+  def run: ZIO[Environment & ZIOAppArgs & Scope, Throwable, Any] =
+    for {
+      _ <- printLine("Hello, world!")
+      zioArgs <- ZIO.service[ZIOAppArgs]
+      args = zioArgs.getArgs.mkString(" ")
+      _ <- printLine(s"Received arguments: $args")
+    } yield "Handler ran successfully"
 
-  override val run =
-    ZLambdaRunner.serve(app)
 }
