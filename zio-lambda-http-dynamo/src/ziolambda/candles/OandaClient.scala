@@ -5,7 +5,6 @@ import sttp.client3.*
 import sttp.client3.ziojson._
 
 import ziolambda.config.AppConfig
-import ziolambda.candles.Candles.*
 
 class OandaClient(config: AppConfig, backend: SttpBackend[Task, Any])
     extends Client:
@@ -32,5 +31,5 @@ class OandaClient(config: AppConfig, backend: SttpBackend[Task, Any])
     backend.send(request).flatMap(r => ZIO.fromEither(r.body))
 
 object OandaClient:
-  val live: ZLayer[AppConfig & SttpBackend[Task, Any], Throwable, Client] =
+  val live: ZLayer[AppConfig & SttpBackend[Task, Any], Nothing, Client] =
     ZLayer.fromFunction(new OandaClient(_, _))

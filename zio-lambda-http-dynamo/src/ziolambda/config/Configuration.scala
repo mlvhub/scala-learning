@@ -16,7 +16,7 @@ final case class OandaConfig(
 )
 
 final case class DbConfig(
-    databaseName: String
+    tableName: String
 )
 
 object Configuration:
@@ -28,7 +28,7 @@ object Configuration:
         apiKey <- ZIO.config(Config.string("OANDA_API_KEY"))
         accountId <- ZIO.config(Config.string("OANDA_ACCOUNT_ID"))
         instrumentId <- ZIO.config(Config.string("OANDA_INSTRUMENT_ID"))
-        databaseName <- ZIO.config(Config.string("DATABASE_NAME"))
+        tableName <- ZIO.config(Config.string("DYNAMO_TABLE_NAME"))
       } yield AppConfig(
         oanda = OandaConfig(
           host = host,
@@ -37,7 +37,7 @@ object Configuration:
           instrumentId = instrumentId
         ),
         db = DbConfig(
-          databaseName = databaseName
+          tableName = tableName
         )
       )
     )
