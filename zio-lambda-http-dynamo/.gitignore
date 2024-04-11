@@ -1,0 +1,9 @@
+.env
+app*
+.metals
+.scala-build
+ziolambdasimple
+ziolambdasimple.build_artifacts.txt
+response.txt
+layer.zip
+lambda

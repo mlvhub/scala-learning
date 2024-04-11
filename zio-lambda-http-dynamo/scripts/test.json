@@ -1,0 +1,14 @@
+{
+  "id": "1234567890",
+  "account": "123456789012",
+  "region": "us-west-2",
+  "detail": {
+    "name": "my-lambda"
+  },
+  "resources": [
+    "arn:aws:lambda:us-west-2:123456789012:function:my-lambda"
+  ],
+  "source": "aws.events",
+  "time": "2024-03-09T12:00:00Z",
+  "detail-type": "Scheduled Event"
+}

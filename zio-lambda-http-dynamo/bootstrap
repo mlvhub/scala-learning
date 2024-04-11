@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -euo pipefail
+
+./lambda "$@"
+
+exit 0
