@@ -9,4 +9,4 @@ trait Client:
       instrumentId: String,
       count: Int,
       granularity: String = "D"
-  ): ZIO[AppConfig, Throwable, Any]
+  ): ZIO[AppConfig, Throwable, Candles]

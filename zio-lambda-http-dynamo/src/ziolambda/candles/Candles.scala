@@ -26,3 +26,7 @@ object Candles:
   given JsonDecoder[CandleMid] = DeriveJsonDecoder.gen[CandleMid]
   given JsonDecoder[Candles] = DeriveJsonDecoder.gen[Candles]
   given JsonDecoder[Candle] = DeriveJsonDecoder.gen[Candle]
+
+  given JsonEncoder[CandleMid] = DeriveJsonEncoder.gen[CandleMid]
+  given JsonEncoder[Candles] = DeriveJsonEncoder.gen[Candles]
+  given JsonEncoder[Candle] = DeriveJsonEncoder.gen[Candle]

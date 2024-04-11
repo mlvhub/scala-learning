@@ -10,6 +10,7 @@ import zio.aws.core.config.AwsConfig
 import zio.aws.dynamodb.DynamoDb
 import zio.aws.netty.NettyHttpClient
 import zio.dynamodb.DynamoDBExecutor
+import zio.logging.consoleJsonLogger
 
 import ziolambda.config.Configuration
 import ziolambda.config.AppConfig
@@ -22,6 +23,9 @@ object LambdaHandler extends ZIOAppDefault {
       context: Context
   ): ZIO[VolatilitySystem.Environment, Throwable, String] =
     VolatilitySystem.run().map(_.message)
+
+  override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
+    Runtime.removeDefaultLoggers >>> consoleJsonLogger()
 
   override val run =
     ZLambdaRunner

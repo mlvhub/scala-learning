@@ -9,12 +9,18 @@ import zio.dynamodb.DynamoDBExecutor
 import zio.aws.dynamodb.DynamoDb
 import zio.aws.netty.NettyHttpClient
 import zio.dynamodb.DynamoDBExecutor
+import zio.logging.{LogAnnotation, LogFormat, consoleJsonLogger}
 
 import ziolambda.config.Configuration
 import ziolambda.config.AppConfig
 import ziolambda.repo.DynamoVolatilityRepo
 
 object MainApp extends ZIOAppDefault:
+
+  val instrumentIdLogAnnotation =
+    LogAnnotation[String]("instrument_id", _ + _, _.toString)
+  override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
+    Runtime.removeDefaultLoggers >>> consoleJsonLogger()
   def run: ZIO[Environment & ZIOAppArgs & Scope, Throwable, Any] =
     VolatilitySystem
       .run()
