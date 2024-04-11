@@ -15,11 +15,8 @@ build-native:
 		-- \
 		--no-fallback \
 		--enable-url-protocols=http \
-		-H:+ReportExceptionStackTraces \
-		--trace-class-initialization=org.slf4j.LoggerFactory \
 		--initialize-at-build-time=org.slf4j.LoggerFactory \
 		--verbose
-
 
 .PHONY: package
 package:
@@ -46,7 +43,7 @@ invoke:
 	./scripts/invoke-lambda.sh $(FUNCTION_NAME)
 
 .PHONY: aws
-aws: clean build-native package create-lambda update-lambda-env-vars invoke
+aws: delete-lambda clean build-native package create-lambda update-lambda-env-vars invoke
 
 .PHONY: run
 run:

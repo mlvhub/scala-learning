@@ -4,6 +4,7 @@ import zio.*
 import zio.dynamodb.*
 import zio.json.{JsonDecoder, JsonEncoder}
 import zio.dynamodb.ProjectionExpression
+import zio.dynamodb.syntax.*
 
 import ziolambda.volatility.Volatility
 import ziolambda.config.AppConfig
@@ -28,14 +29,7 @@ final class DynamoVolatilityRepo(
         Volatility.instrumentId.partitionKey === instrumentId
       )
       .execute
-      .flatMap {
-        case Left(DynamoDBError.ItemError.ValueNotFound(_)) =>
-          ZIO.succeed(None)
-        case Left(error) =>
-          ZIO.fail(error)
-        case Right(value) =>
-          ZIO.succeed(Some(value))
-      }
+      .maybeFound
       .provide(ZLayer.succeed(dynamoDbExecutor))
 }
 
