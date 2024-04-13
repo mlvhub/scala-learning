@@ -1,5 +1,5 @@
 //> using scala "3"
-//> using dep "dev.zio::zio::2.0.21"
+//> using dep "dev.zio::zio::2.0.22"
 //> using dep "dev.zio::zio-logging::2.2.2"
 //> using dep "dev.zio::zio-json::0.6.2"
 //> using dep "dev.zio::zio-lambda::1.0.4"
