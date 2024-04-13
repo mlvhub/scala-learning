@@ -18,25 +18,28 @@ object VolatilitySystem {
   )
 
   val instrumentIdLogAnnotation =
-    LogAnnotation[String]("instrument_id", _ + _, _.toString)
+    LogAnnotation[String]("instrument_id", _ + _, identity)
 
   type Environment = AppConfig & candles.Client & VolatilityRepo
 
   def run(): ZIO[Environment, Throwable, Result] = for {
     appConfig <- ZIO.service[AppConfig]
+    _ <- ZIO.logInfo(
+      s"Running volatility system for instrument ${appConfig.oanda.instrumentId}"
+    )
     oandaClient <- ZIO.service[candles.Client]
     volatilityRepo <- ZIO.service[VolatilityRepo]
     candles <- oandaClient.candles(appConfig.oanda.instrumentId, 10)
     _ <- ZIO.logInfo(
       s"Got ${candles.candles.length} candles for ${appConfig.oanda.instrumentId}"
     )
-    _ <- volatilityRepo.save(
-      Volatility(
-        appConfig.oanda.instrumentId,
-        Instant.now().toEpochMilli(),
-        0.0
-      )
+    // TODO: calculate volatility
+    volatility = Volatility(
+      appConfig.oanda.instrumentId,
+      Instant.now().toEpochMilli(),
+      0.0
     )
+    _ <- volatilityRepo.save(volatility)
     // TODO: add sort key
     volatility <- volatilityRepo.getVolatility(appConfig.oanda.instrumentId, 0)
     _ <- volatility match {
@@ -49,5 +52,8 @@ object VolatilitySystem {
           s"No volatility found for instrument ${appConfig.oanda.instrumentId}"
         )
     }
+    _ <- ZIO.logInfo(
+      s"Finished volatility system for instrument ${appConfig.oanda.instrumentId}"
+    )
   } yield Result(message = volatility.toJson)
 }
