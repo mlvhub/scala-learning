@@ -15,6 +15,7 @@ import zio.logging.consoleJsonLogger
 import ziolambda.config.Configuration
 import ziolambda.config.AppConfig
 import ziolambda.repo.DynamoVolatilityRepo
+import ziolambda.http.CustomNettyClient
 
 object LambdaHandler extends ZIOAppDefault {
 
@@ -34,7 +35,7 @@ object LambdaHandler extends ZIOAppDefault {
         Configuration.live,
         candles.OandaClient.live,
         HttpClientZioBackend.layer(),
-        NettyHttpClient.default,
+        CustomNettyClient.live,
         AwsConfig.default,
         DynamoDb.live,
         DynamoDBExecutor.live,
