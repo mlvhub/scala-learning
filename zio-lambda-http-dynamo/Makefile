@@ -4,6 +4,7 @@ HANDLER=ziolambda.LambdaHandler
 .PHONY: clean
 clean:
 	rm -rf lambda lambda.build_artifacts.txt layer.zip response.txt
+	scala-cli clean .
 
 .PHONY: build-native
 build-native:
