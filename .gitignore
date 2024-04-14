@@ -41,3 +41,5 @@ bin/
 .cache-main
 
 # general
+reports/
+**/*.build_artifacts.txt
