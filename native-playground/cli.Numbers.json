@@ -1,0 +1,82 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Numbers",
+        "version": ""
+    },
+    "paths": {
+        "/{number}/{type}": {
+            "get": {
+                "operationId": "GetNumberFact",
+                "parameters": [
+                    {
+                        "name": "number",
+                        "in": "path",
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^(([0-9]*)|(random))$"
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "schema": {
+                            "$ref": "#/components/schemas/Type"
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "json",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GetNumberFact 200 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetNumberFactResponseContent"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "GetNumberFactResponseContent": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string"
+                    },
+                    "found": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "found",
+                    "text"
+                ]
+            },
+            "Type": {
+                "type": "string",
+                "enum": [
+                    "trivia",
+                    "math",
+                    "date",
+                    "year"
+                ]
+            }
+        }
+    }
+}

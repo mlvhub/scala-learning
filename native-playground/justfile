@@ -1,0 +1,21 @@
+world:
+    docker run -p5432:5432 -d tpolecat/skunk-world
+
+psql:
+    psql -h localhost -p 5432 -U jimmy -d world
+
+psql-exec query:
+    psql -h localhost -p 5432 -U jimmy -d world -c "{{query}}"
+
+# NOTE: taken from https://github.com/indoorvivants/sn-bindgen-web/blob/main/publish-forks.sh
+clone: clone-skunk
+
+clone-skunk:
+    mkdir -p clones && \
+        cd clones && \
+        git clone https://github.com/keynmol/skunk && \
+        cd skunk && \
+        git checkout 7f46fa88a8f0e467cc84375bc8fad605859522a9 && \
+        git fetch --tags https://github.com/typelevel/skunk && \
+        sbt "++3.x coreNative/publishLocal" && \
+        cd ../ 
