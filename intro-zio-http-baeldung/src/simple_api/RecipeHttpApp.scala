@@ -6,7 +6,7 @@ import zio.json.*
 import simple_api.services.RecipeService
 import simple_api.repositories.RecipeRepo
 import simple_api.models.Recipe
-import simple_api.models.Recipe.*
+// import simple_api.models.Recipe.*
 
 import scala.util.{Failure, Success, Try}
 
